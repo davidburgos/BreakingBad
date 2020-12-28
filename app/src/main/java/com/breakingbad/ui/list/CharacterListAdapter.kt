@@ -28,6 +28,10 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
         holder.bind(getItem(position), holder.itemView)
     }
 
+    fun orderList() {
+        submitList(currentList.sortedByDescending { it.isFavorite })
+    }
+
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         private fun markCharacterAsFavorite(isFavorite: Boolean) {

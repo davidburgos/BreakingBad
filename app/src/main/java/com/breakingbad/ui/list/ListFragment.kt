@@ -54,7 +54,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun onFavoriteClicked(item: Character) {
-        Log.i("test", item.toString())
+        adapter.orderList()
     }
 
     private fun setLoading(isLoading: Boolean) {
@@ -81,11 +81,11 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         emptyMessageView.visible = false
     }
 
-    private fun setListItems(characterList: List<Character>) {
-        if (characterList.isEmpty()) {
+    private fun setListItems(characters: List<Character>) {
+        if (characters.isEmpty()) {
             displayMessage(R.string.fragment_list_empty_message, R.drawable.ic_empty_message)
         } else {
-            adapter.submitList(characterList)
+            adapter.submitList(characters.sortedByDescending { it.isFavorite })
             cleanMessage()
         }
     }

@@ -10,7 +10,8 @@ import com.breakingbad.data.model.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class CharacterListAdapter: ListAdapter<Character, CharacterListAdapter.ViewHolder>(Character.diffCallback) {
+class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> Unit)?):
+    ListAdapter<Character, CharacterListAdapter.ViewHolder>(Character.diffCallback) {
 
     companion object {
         const val IMAGE_WIDTH = 100
@@ -28,9 +29,23 @@ class CharacterListAdapter: ListAdapter<Character, CharacterListAdapter.ViewHold
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+        private fun isFavorite(item: Character) {
+            if (item.isFavorite) {
+                itemView.characterFavorite.setImageResource(R.drawable.ic_favorite)
+            } else {
+                itemView.characterFavorite.setImageResource(R.drawable.ic_favorite_border)
+            }
+        }
+
         fun bind(item: Character, itemView: View) {
             itemView.characterName.text = item.name
             itemView.characterNickname.text = item.nickname
+            isFavorite(item)
+            itemView.characterFavorite.setOnClickListener {
+                item.isFavorite = !item.isFavorite
+                isFavorite(item)
+                onFavoriteClicked?.invoke(item)
+            }
 
             if (item.img.isNotEmpty()) {
                 Picasso.get()

@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.breakingbad.ui.list.ListFragment"
-        android:label="@string/list_title"
+        android:label="@string/breaking_bad_characters_title"
         tools:layout="@layout/fragment_list" >
 
         <action

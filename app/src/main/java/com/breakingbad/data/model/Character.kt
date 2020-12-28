@@ -15,7 +15,8 @@ data class Character(
     val appearance: List<Int>,
     val portrayed: String,
     val category: String,
-    val better_call_saul_appearance: List<Int>
+    val better_call_saul_appearance: List<Int>,
+    var isFavorite: Boolean = false
 ) {
     companion object {
         val diffCallback = object: DiffUtil.ItemCallback<Character>() {

@@ -2,7 +2,7 @@
     <string name="app_name">Breaking Bad</string>
 
     <!--List-->
-    <string name="list_title">Breaking Bad Characters</string>
+    <string name="breaking_bad_characters_title">Breaking Bad Characters</string>
 
     <!--Error Messages-->
     <string name="error_message_default">Oops something has happened.</string>

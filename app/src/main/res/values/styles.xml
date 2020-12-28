@@ -16,4 +16,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!--region TextView-->
+    <style name="SelectableItem">
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="TitleText" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/fragment_list_title_color</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SubTitleText" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/fragment_list_sub_title_color</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+    <!--endregion-->
+
 </resources>

@@ -4,11 +4,14 @@
     <!--List-->
     <string name="list_title">Breaking Bad Characters</string>
 
-    <!--defaults-->
+    <!--Error Messages-->
     <string name="error_message_default">Oops something has happened.</string>
     <string name="error_message_time_out">Timeout</string>
     <string name="error_message_not_found">Not found!</string>
     <string name="error_message_no_internet_connection">No internet connection</string>
+
+    <!--defaults-->
+    <string name="fragment_list_empty_message">There are no items to show</string>
 
 
 </resources>

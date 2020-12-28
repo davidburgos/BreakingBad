@@ -17,6 +17,8 @@ You can the Characters info, and mark them as favorites.
 ### External Libraries
 1. [Retrofit](https://square.github.io/retrofit/)
 2. [Okhttp](https://square.github.io/okhttp/)
+3. [Picasso](https://square.github.io/picasso/)
+4. [Coroutines](https://developer.android.com/kotlin/coroutines-adv)
 
 ### Branches
 * **[master](https://github.com/davidburgos/BreakingBad/tree/master)** *(Production)*

@@ -13,5 +13,10 @@
     <!--defaults-->
     <string name="fragment_list_empty_message">There are no items to show</string>
 
+    <!--Detail-->
+    <string name="detail_occupation_label">Occupation:</string>
+    <string name="detail_status_label">Status:</string>
+    <string name="detail_portrayed_label">Portrayed:</string>
+
 
 </resources>

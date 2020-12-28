@@ -1,8 +1,11 @@
 package com.breakingbad.data.model
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class Character(
     @SerializedName("char_id")
     val id: Int,
@@ -17,7 +20,7 @@ data class Character(
     val category: String,
     val better_call_saul_appearance: List<Int>,
     var isFavorite: Boolean = false
-) {
+): Parcelable {
     companion object {
         val diffCallback = object: DiffUtil.ItemCallback<Character>() {
             override fun areItemsTheSame(oldItem: Character, newItem: Character) = oldItem.id == newItem.id

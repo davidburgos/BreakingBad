@@ -29,6 +29,12 @@
             android:name="title"
             app:argType="string" />
 
+        <argument
+            android:name="item"
+            app:argType="com.breakingbad.data.model.Character"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
         <action
             android:id="@+id/action_detailFragment_to_listFragment"
             app:destination="@id/listFragment"

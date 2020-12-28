@@ -10,7 +10,8 @@ import com.breakingbad.data.model.Character
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_character.view.*
 
-class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> Unit)?):
+class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> Unit)?,
+                           private val onCharacterClicked: ((item: Character) -> Unit)?):
     ListAdapter<Character, CharacterListAdapter.ViewHolder>(Character.diffCallback) {
 
     companion object {
@@ -29,8 +30,8 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        private fun isFavorite(item: Character) {
-            if (item.isFavorite) {
+        private fun markCharacterAsFavorite(isFavorite: Boolean) {
+            if (isFavorite) {
                 itemView.characterFavorite.setImageResource(R.drawable.ic_favorite)
             } else {
                 itemView.characterFavorite.setImageResource(R.drawable.ic_favorite_border)
@@ -40,10 +41,13 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
         fun bind(item: Character, itemView: View) {
             itemView.characterName.text = item.name
             itemView.characterNickname.text = item.nickname
-            isFavorite(item)
+
+            markCharacterAsFavorite(item.isFavorite)
+
+            itemView.setOnClickListener{ onCharacterClicked?.invoke(item) }
             itemView.characterFavorite.setOnClickListener {
                 item.isFavorite = !item.isFavorite
-                isFavorite(item)
+                markCharacterAsFavorite(item.isFavorite)
                 onFavoriteClicked?.invoke(item)
             }
 

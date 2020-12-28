@@ -1,9 +1,11 @@
 package com.breakingbad.ui.list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_list.*
  */
 class ListFragment : Fragment(R.layout.fragment_list) {
 
-    private val adapter = CharacterListAdapter { onFavoriteClicked(it) }
+    private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
 
     private val viewModel by navGraphViewModels<ListViewModel>(R.id.nav_graph) {
         createViewModelFactory { ListViewModel() }
@@ -32,9 +34,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun setListeners() {
-        viewModel.loading().observe(viewLifecycleOwner, Observer { setLoading(it) })
-        viewModel.getError().observe(viewLifecycleOwner, Observer { displayMessage(it, R.drawable.ic_something_went_wrong) })
-        viewModel.getCharacters().observe(viewLifecycleOwner, Observer { setListItems(it) })
+        viewModel.loading().observe(viewLifecycleOwner, { setLoading(it) })
+        viewModel.getError().observe(viewLifecycleOwner, { displayMessage(it, R.drawable.ic_something_went_wrong) })
+        viewModel.getCharacters().observe(viewLifecycleOwner, { setListItems(it) })
     }
 
     private fun displayMessage(messageId: Int, iconId: Int) {
@@ -44,8 +46,15 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         messageDescription.text = resources.getString(messageId)
     }
 
-    private fun onFavoriteClicked(item: Character) {
+    private fun onCharacterClicked(item: Character) {
+        val bundle = Bundle()
+        bundle.putParcelable("item", item)
+        bundle.putString("title", item.name)
+        findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
+    }
 
+    private fun onFavoriteClicked(item: Character) {
+        Log.i("test", item.toString())
     }
 
     private fun setLoading(isLoading: Boolean) {

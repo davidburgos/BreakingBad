@@ -1,15 +1,14 @@
-package com.breakingbad.detail
+package com.breakingbad.ui.detail
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.breakingbad.R
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A Detail [Fragment] to display the character information.
  */
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 

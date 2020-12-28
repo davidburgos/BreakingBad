@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.breakingbad.list.ListFragment"
+        android:name="com.breakingbad.ui.list.ListFragment"
         android:label="@string/list_title"
         tools:layout="@layout/fragment_list" >
 
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.breakingbad.detail.DetailFragment"
+        android:name="com.breakingbad.ui.detail.DetailFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_detail" >
 

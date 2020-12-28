@@ -19,12 +19,12 @@ import kotlinx.android.synthetic.main.fragment_list.*
 /**
  * A List [Fragment] that will display all characters.
  */
-class ListFragment : Fragment(R.layout.fragment_list) {
+class CharacterListFragment : Fragment(R.layout.fragment_list) {
 
     private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
 
-    private val viewModel by navGraphViewModels<ListViewModel>(R.id.nav_graph) {
-        createViewModelFactory { ListViewModel() }
+    private val viewModel by navGraphViewModels<CharacterListViewModel>(R.id.nav_graph) {
+        createViewModelFactory { CharacterListViewModel() }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

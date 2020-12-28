@@ -12,9 +12,9 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 /**
  * A Detail [Fragment] to display the character information.
  */
-class DetailFragment : Fragment(R.layout.fragment_detail) {
+class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
 
-    private val args: DetailFragmentArgs by navArgs()
+    private val args: CharacterDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -11,7 +11,7 @@ import com.breakingbad.data.model.Character
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ListViewModel: ViewModel() {
+class CharacterListViewModel: ViewModel() {
 
     private val list = MutableLiveData<List<Character>>()
     private val error = MutableLiveData<Int>()

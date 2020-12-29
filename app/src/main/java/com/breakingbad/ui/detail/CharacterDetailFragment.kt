@@ -1,7 +1,9 @@
 package com.breakingbad.ui.detail
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
@@ -9,11 +11,11 @@ import com.breakingbad.R
 import com.breakingbad.common.createViewModelFactory
 import com.breakingbad.data.model.Character
 import com.breakingbad.data.repository.CharacterRepository
+import com.breakingbad.databinding.FragmentDetailBinding
 import com.breakingbad.ui.list.CharacterListAdapter
 import com.breakingbad.ui.list.CharacterViewModel
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_detail.*
 import javax.inject.Inject
 
 /**
@@ -24,12 +26,22 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private val args: CharacterDetailFragmentArgs by navArgs()
     private var character: Character? = null
+    private lateinit var binding: FragmentDetailBinding
 
     @Inject
     lateinit var repository: CharacterRepository
 
     private val viewModel by navGraphViewModels<CharacterViewModel>(R.id.nav_graph) {
         createViewModelFactory { CharacterViewModel(repository) }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +52,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun initListeners() {
         viewModel.loading().observe(viewLifecycleOwner) { setLoading(it) }
-        characterDetailFavorite.setOnClickListener {
+        binding.characterDetailFavorite.setOnClickListener {
             character?.let {
                 it.isFavorite = !(it.isFavorite)
                 viewModel.setCharacterAsFavorite(it)
@@ -50,9 +62,9 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun setLoading(isLoading: Boolean) {
         if (isLoading) {
-            progressBar.show()
+            binding.progressBar.show()
         } else {
-            progressBar.hide()
+            binding.progressBar.hide()
         }
     }
 
@@ -67,15 +79,15 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun refreshUI() {
         character?.apply {
-            characterDetailNickName.text = nickname
-            characterDetailOccupation.text = occupation?.joinToString()
-            characterDetailStatus.text = status
-            characterDetailPortrayed.text = portrayed
+            binding.characterDetailNickName.text = nickname
+            binding.characterDetailOccupation.text = occupation?.joinToString()
+            binding.characterDetailStatus.text = status
+            binding.characterDetailPortrayed.text = portrayed
 
             if (isFavorite) {
-                characterDetailFavorite.setImageResource(R.drawable.ic_favorite)
+                binding.characterDetailFavorite.setImageResource(R.drawable.ic_favorite)
             } else {
-                characterDetailFavorite.setImageResource(R.drawable.ic_favorite_border)
+                binding.characterDetailFavorite.setImageResource(R.drawable.ic_favorite_border)
             }
 
             if (img?.isNotEmpty() == true) {
@@ -85,7 +97,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
                     .error(R.drawable.ic_something_went_wrong)
                     .resize(CharacterListAdapter.IMAGE_WIDTH, CharacterListAdapter.IMAGE_HEIGHT)
                     .centerCrop()
-                    .into(characterDetailImage)
+                    .into(binding.characterDetailImage)
             }
         }
     }

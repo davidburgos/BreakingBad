@@ -15,6 +15,7 @@ You can the Characters info, and mark them as favorites.
 3. [Room](https://developer.android.com/topic/libraries/architecture/room)
 4. [Paging](https://developer.android.com/topic/libraries/architecture/paging)
 5. [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)
+6. [ViewBinding](https://developer.android.com/topic/libraries/view-binding)
 
 ### External Libraries
 1. [Retrofit](https://square.github.io/retrofit/)

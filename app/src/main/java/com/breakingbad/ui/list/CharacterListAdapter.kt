@@ -1,14 +1,13 @@
 package com.breakingbad.ui.list
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.breakingbad.R
 import com.breakingbad.data.model.Character
+import com.breakingbad.databinding.ItemCharacterBinding
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_character.view.*
 
 class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> Unit)?,
                            private val onCharacterClicked: ((item: Character) -> Unit)?):
@@ -20,33 +19,33 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val item = LayoutInflater.from(parent.context).inflate(R.layout.item_character, parent, false)
-        return ViewHolder(item)
+        val binding = ItemCharacterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(it, holder.itemView)
+            holder.bind(it, holder.item)
         }
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(val item: ItemCharacterBinding): RecyclerView.ViewHolder(item.root) {
 
         private fun markCharacterAsFavorite(isFavorite: Boolean) {
             if (isFavorite) {
-                itemView.characterFavorite.setImageResource(R.drawable.ic_favorite)
+                item.characterFavorite.setImageResource(R.drawable.ic_favorite)
             } else {
-                itemView.characterFavorite.setImageResource(R.drawable.ic_favorite_border)
+                item.characterFavorite.setImageResource(R.drawable.ic_favorite_border)
             }
         }
 
-        fun bind(item: Character, itemView: View) {
+        fun bind(item: Character, itemView: ItemCharacterBinding) {
             itemView.characterName.text = item.name
             itemView.characterNickname.text = item.nickname
 
             markCharacterAsFavorite(item.isFavorite)
 
-            itemView.setOnClickListener{ onCharacterClicked?.invoke(item) }
+            itemView.root.setOnClickListener{ onCharacterClicked?.invoke(item) }
             itemView.characterFavorite.setOnClickListener {
                 item.isFavorite = !item.isFavorite
                 markCharacterAsFavorite(item.isFavorite)

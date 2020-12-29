@@ -2,7 +2,9 @@ package com.breakingbad.ui.list
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -17,9 +19,9 @@ import com.breakingbad.common.createViewModelFactory
 import com.breakingbad.common.mapExceptionToMessageId
 import com.breakingbad.data.model.Character
 import com.breakingbad.data.repository.CharacterRepository
+import com.breakingbad.databinding.EmptyMessageLayoutBinding
+import com.breakingbad.databinding.FragmentListBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.empty_message_layout.*
-import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,12 +33,24 @@ import javax.inject.Inject
 class CharacterListFragment : Fragment(R.layout.fragment_list) {
 
     private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
+    private lateinit var binding: FragmentListBinding
+    private lateinit var emptyMessageBinding: EmptyMessageLayoutBinding
 
     @Inject
     lateinit var repository: CharacterRepository
 
     private val viewModel by navGraphViewModels<CharacterViewModel>(R.id.nav_graph) {
         createViewModelFactory { CharacterViewModel(repository) }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentListBinding.inflate(inflater, container, false)
+        emptyMessageBinding = binding.emptyMessageView
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,10 +77,10 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun displayMessage(messageId: Int, iconId: Int) {
-        recyclerListView.isVisible = false
-        emptyMessageView.isVisible = true
-        messageImage.setImageResource(iconId)
-        messageDescription.text = resources.getString(messageId)
+        binding.recyclerListView.isVisible = false
+        emptyMessageBinding.root.isVisible = true
+        emptyMessageBinding.messageImage.setImageResource(iconId)
+        emptyMessageBinding.messageDescription.text = resources.getString(messageId)
     }
 
     private fun onCharacterClicked(item: Character) {
@@ -79,16 +93,16 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
 
     private fun setLoading(isLoading: Boolean) {
         if (isLoading) {
-            recyclerListView?.isVisible = false
-            progressBar.show()
+            binding.recyclerListView.isVisible = false
+            binding.progressBar.show()
         } else {
-            recyclerListView?.isVisible = true
-            progressBar.hide()
+            binding.recyclerListView.isVisible = true
+            binding.progressBar.hide()
         }
     }
 
     private fun initData() {
-        recyclerListView?.let {
+        binding.recyclerListView.let {
             it.layoutManager = LinearLayoutManager(context)
             it.itemAnimator = DefaultItemAnimator()
             it.adapter = adapter
@@ -97,8 +111,8 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun cleanMessage() {
-        recyclerListView?.isVisible = true
-        emptyMessageView?.isVisible = false
+        binding.recyclerListView.isVisible = true
+        emptyMessageBinding.root.isVisible = false
     }
 
     private fun setListItems(characters: PagingData<Character>) {

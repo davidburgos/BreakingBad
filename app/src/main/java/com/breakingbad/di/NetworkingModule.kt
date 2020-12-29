@@ -18,7 +18,9 @@ object NetworkingModule {
 
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply { level = (HttpLoggingInterceptor.Level.BASIC) }
+        HttpLoggingInterceptor().also {
+            it.level = HttpLoggingInterceptor.Level.BASIC
+        }
 
     @Provides
     fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient =

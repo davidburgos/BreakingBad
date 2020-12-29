@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Character(
     @SerializedName("char_id")
-    @PrimaryKey val id: Int = 0,
+    @PrimaryKey val id: Long = 0,
     val name: String? = "",
     val occupation: List<String>? = listOf(),
     val img: String? = "",

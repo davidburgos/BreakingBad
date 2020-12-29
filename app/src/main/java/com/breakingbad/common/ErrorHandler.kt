@@ -10,11 +10,14 @@ inline fun <T> handleError(codeBlock: () -> T): Result<T> =
         Result.Success(true, codeBlock())
     } catch (e: Exception) {
         e.printStackTrace()
-        val message: Int = when (e) {
-            is SocketTimeoutException, is InterruptedIOException -> R.string.error_message_time_out
-            is AccessDeniedException -> R.string.error_message_not_found
-            is UnknownHostException -> R.string.error_message_no_internet_connection
-            else -> R.string.error_message_default
-        }
-        Result.Error(e, message)
+        Result.Error(e, mapExceptionToMessageId(e))
     }
+
+fun mapExceptionToMessageId(e: Throwable) : Int {
+    return when (e) {
+        is SocketTimeoutException, is InterruptedIOException -> R.string.error_message_time_out
+        is AccessDeniedException -> R.string.error_message_not_found
+        is UnknownHostException -> R.string.error_message_no_internet_connection
+        else -> R.string.error_message_default
+    }
+}

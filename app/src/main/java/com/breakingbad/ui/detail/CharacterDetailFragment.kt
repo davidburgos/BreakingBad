@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.breakingbad.R
+import com.breakingbad.common.createViewModelFactory
 import com.breakingbad.data.model.Character
+import com.breakingbad.data.repository.CharacterRepository
 import com.breakingbad.ui.list.CharacterListAdapter
 import com.breakingbad.ui.list.CharacterViewModel
 import com.squareup.picasso.Picasso
@@ -23,7 +26,11 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_detail) {
     private var character: Character? = null
 
     @Inject
-    lateinit var viewModel: CharacterViewModel
+    lateinit var repository: CharacterRepository
+
+    private val viewModel by navGraphViewModels<CharacterViewModel>(R.id.nav_graph) {
+        createViewModelFactory { CharacterViewModel(repository) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

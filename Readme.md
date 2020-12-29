@@ -13,6 +13,8 @@ You can the Characters info, and mark them as favorites.
 1. [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
 2. [View Model](https://developer.android.com/topic/libraries/architecture/viewmodel)
 3. [Room](https://developer.android.com/topic/libraries/architecture/room)
+4. [Paging](https://developer.android.com/topic/libraries/architecture/paging)
+5. [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)
 
 ### External Libraries
 1. [Retrofit](https://square.github.io/retrofit/)

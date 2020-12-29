@@ -7,18 +7,6 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.core.view.ViewCompat
 
 //region - View
-var View.visible: Boolean
-    get() = visibility == View.VISIBLE
-    set(value) {
-        visibility = if (value) View.VISIBLE else View.GONE
-    }
-
-var View.invisible: Boolean
-    get() = visibility == View.INVISIBLE
-    set(value) {
-        visibility = if (value) View.INVISIBLE else View.VISIBLE
-    }
-
 fun View.fadeOut(duration: Long = 1000L) {
     ViewCompat.animate(this)
         .alpha(0F)

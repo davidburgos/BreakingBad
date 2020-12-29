@@ -3,7 +3,7 @@ package com.breakingbad.ui.list
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.breakingbad.R
 import com.breakingbad.data.model.Character
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_character.view.*
 
 class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> Unit)?,
                            private val onCharacterClicked: ((item: Character) -> Unit)?):
-    ListAdapter<Character, CharacterListAdapter.ViewHolder>(Character.diffCallback) {
+    PagingDataAdapter<Character, CharacterListAdapter.ViewHolder>(Character.diffCallback) {
 
     companion object {
         const val IMAGE_WIDTH = 100
@@ -25,7 +25,9 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), holder.itemView)
+        getItem(position)?.let {
+            holder.bind(it, holder.itemView)
+        }
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

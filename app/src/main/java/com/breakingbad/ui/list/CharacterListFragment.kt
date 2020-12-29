@@ -3,16 +3,25 @@ package com.breakingbad.ui.list
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.breakingbad.R
-import com.breakingbad.common.visible
+import com.breakingbad.common.createViewModelFactory
+import com.breakingbad.common.mapExceptionToMessageId
 import com.breakingbad.data.model.Character
+import com.breakingbad.data.repository.CharacterRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.empty_message_layout.*
 import kotlinx.android.synthetic.main.fragment_list.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -24,23 +33,38 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
 
     @Inject
-    lateinit var viewModel: CharacterViewModel
+    lateinit var repository: CharacterRepository
+
+    private val viewModel by navGraphViewModels<CharacterViewModel>(R.id.nav_graph) {
+        createViewModelFactory { CharacterViewModel(repository) }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setListeners()
         initData()
+        setListeners()
     }
 
     private fun setListeners() {
         viewModel.loading().observe(viewLifecycleOwner) { setLoading(it) }
         viewModel.getError().observe(viewLifecycleOwner) { displayMessage(it, R.drawable.ic_something_went_wrong) }
         viewModel.getCharacters().observe(viewLifecycleOwner) { setListItems(it) }
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                when(loadStates.refresh) {
+                    is LoadState.Error -> {
+                        val message: Int = mapExceptionToMessageId((loadStates.refresh as LoadState.Error).error)
+                        displayMessage(message, R.drawable.ic_something_went_wrong)
+                    }
+                }
+            }
+        }
     }
 
     private fun displayMessage(messageId: Int, iconId: Int) {
-        recyclerListView.visible = false
-        emptyMessageView.visible = true
+        recyclerListView.isVisible = false
+        emptyMessageView.isVisible = true
         messageImage.setImageResource(iconId)
         messageDescription.text = resources.getString(messageId)
     }
@@ -55,10 +79,10 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
 
     private fun setLoading(isLoading: Boolean) {
         if (isLoading) {
-            recyclerListView.visible = false
+            recyclerListView?.isVisible = false
             progressBar.show()
         } else {
-            recyclerListView.visible = true
+            recyclerListView?.isVisible = true
             progressBar.hide()
         }
     }
@@ -73,15 +97,13 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun cleanMessage() {
-        recyclerListView.visible = true
-        emptyMessageView.visible = false
+        recyclerListView?.isVisible = true
+        emptyMessageView?.isVisible = false
     }
 
-    private fun setListItems(characters: List<Character>) {
-        if (characters.isEmpty()) {
-            displayMessage(R.string.fragment_list_empty_message, R.drawable.ic_empty_message)
-        } else {
-            adapter.submitList(characters)
+    private fun setListItems(characters: PagingData<Character>) {
+        lifecycleScope.launch {
+            adapter.submitData(characters)
             cleanMessage()
         }
     }

@@ -1,25 +1,23 @@
 package com.breakingbad.ui.list
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.breakingbad.data.model.Character
-import com.breakingbad.data.networking.ApiSource
-import com.breakingbad.data.persistance.CharacterDataBase
 import com.breakingbad.data.repository.CharacterRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CharacterListViewModel(application: Application): AndroidViewModel(application) {
+class CharacterViewModel @Inject constructor(
+    private val repository: CharacterRepository
+) : ViewModel() {
 
     private val list = MediatorLiveData<List<Character>>()
     private val error = MutableLiveData<Int>()
     private val loading = MutableLiveData(true)
-    private val repository: CharacterRepository =
-        CharacterRepository(ApiSource(), CharacterDataBase.getDatabase(application).getCharacterDAO())
 
     init {
         loadCharacters()

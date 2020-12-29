@@ -51,7 +51,7 @@ class CharacterListAdapter(private val onFavoriteClicked: ((item: Character) -> 
                 onFavoriteClicked?.invoke(item)
             }
 
-            if (item.img.isNotEmpty()) {
+            if (item.img?.isNotEmpty() == true) {
                 Picasso.get()
                     .load(item.img)
                     .placeholder(R.drawable.ic_default_user_image)

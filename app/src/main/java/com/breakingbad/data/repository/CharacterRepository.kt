@@ -7,8 +7,9 @@ import com.breakingbad.data.networking.ApiSource
 import com.breakingbad.data.persistance.CharacterDAO
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class CharacterRepository(
+class CharacterRepository @Inject constructor(
     private val apiSource: ApiSource,
     private val characterDAO: CharacterDAO
 ) {
@@ -18,14 +19,13 @@ class CharacterRepository(
      *
      * @return LiveData<List<Character>> observable list with characters.
      * */
-    suspend fun getCharacters(): LiveData<List<Character>> {
-        return withContext(Dispatchers.IO) {
+    suspend fun getCharacters(): LiveData<List<Character>> =
+        withContext(Dispatchers.IO) {
             if (characterDAO.charactersCount() == 0) {
                 refreshCharacters()
             }
             characterDAO.getAllCharacters()
         }
-    }
 
     /**
      * Mark the selected character as favorite.
@@ -35,11 +35,10 @@ class CharacterRepository(
      *
      * @return if character was saved on database or not.
      * */
-    suspend fun setCharacterAsFavorite(characterId: Int, isFavorite: Boolean = true): Boolean {
-        return withContext(Dispatchers.IO){
+    suspend fun setCharacterAsFavorite(characterId: Int, isFavorite: Boolean = true): Boolean =
+        withContext(Dispatchers.IO) {
             characterDAO.setCharacterAsFavorite(characterId, isFavorite) == 1
         }
-    }
 
     /**
      * Get a single character for a given Id.
@@ -48,11 +47,10 @@ class CharacterRepository(
      *
      * @return Observable character object. can be null.
      * */
-    suspend fun getCharacterById(characterId: Int): LiveData<Character?> {
-        return withContext(Dispatchers.IO) {
+    suspend fun getCharacterById(characterId: Int): LiveData<Character?> =
+        withContext(Dispatchers.IO) {
             characterDAO.loadCharacter(characterId)
         }
-    }
 
     private suspend fun refreshCharacters() {
         when (val result = apiSource.getCharacters()) {

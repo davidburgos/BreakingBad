@@ -7,8 +7,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.breakingbad.R
-import kotlinx.android.synthetic.main.toolbar.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.toolbar.toolbar
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val navController by lazy { findNavController(R.id.nav_host_fragment) }

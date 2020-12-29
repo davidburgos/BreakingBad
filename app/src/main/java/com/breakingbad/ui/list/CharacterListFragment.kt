@@ -4,28 +4,27 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.breakingbad.R
-import com.breakingbad.common.createViewModelFactory
 import com.breakingbad.common.visible
 import com.breakingbad.data.model.Character
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.empty_message_layout.*
 import kotlinx.android.synthetic.main.fragment_list.*
+import javax.inject.Inject
 
 /**
  * A List [Fragment] that will display all characters.
  */
+@AndroidEntryPoint
 class CharacterListFragment : Fragment(R.layout.fragment_list) {
 
     private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
 
-    private val viewModel by navGraphViewModels<CharacterListViewModel>(R.id.nav_graph) {
-        createViewModelFactory { CharacterListViewModel(requireActivity().application) }
-    }
+    @Inject
+    lateinit var viewModel: CharacterViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

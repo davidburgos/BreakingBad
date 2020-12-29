@@ -12,16 +12,12 @@ import kotlinx.android.parcel.Parcelize
 data class Character(
     @SerializedName("char_id")
     @PrimaryKey val id: Int = 0,
-    val name: String = "",
-    val birthday: String = "",
-    val occupation: List<String> = listOf(),
-    val img: String = "",
-    val status: String = "",
-    val nickname: String = "",
-    val appearance: List<Int> = listOf(),
-    val portrayed: String = "",
-    val category: String = "",
-    val better_call_saul_appearance: List<Int> = listOf(),
+    val name: String? = "",
+    val occupation: List<String>? = listOf(),
+    val img: String? = "",
+    val status: String? = "",
+    val nickname: String? = "",
+    val portrayed: String? = "",
     var isFavorite: Boolean = false
 ): Parcelable {
     companion object {

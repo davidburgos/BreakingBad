@@ -32,6 +32,12 @@
         <item name="android:textColor">@color/fragment_list_sub_title_color</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <style name="DetailTitleText" parent="SubTitleText"/>
+
+    <style name="DetailSubTitleText" parent="TitleText">
+        <item name="android:textStyle">normal</item>
+    </style>
     <!--endregion-->
 
 </resources>

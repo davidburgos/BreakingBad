@@ -1,7 +1,7 @@
-package com.breakingbad.data
+package com.breakingbad.data.networking
 
 import com.breakingbad.common.handleError
-import com.breakingbad.data.model.BreakingBadAPI
+import com.breakingbad.data.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +11,9 @@ import java.util.concurrent.TimeUnit
 class ApiSource {
 
     private val interceptor: HttpLoggingInterceptor by lazy {
-        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
     }
 
     private val okHttpClient by lazy {

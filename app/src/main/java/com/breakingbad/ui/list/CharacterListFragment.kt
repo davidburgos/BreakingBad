@@ -1,7 +1,7 @@
 package com.breakingbad.ui.list
 
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -24,7 +24,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     private val adapter = CharacterListAdapter({ onFavoriteClicked(it) }, { onCharacterClicked(it) })
 
     private val viewModel by navGraphViewModels<CharacterListViewModel>(R.id.nav_graph) {
-        createViewModelFactory { CharacterListViewModel() }
+        createViewModelFactory { CharacterListViewModel(requireActivity().application) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,9 +34,9 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun setListeners() {
-        viewModel.loading().observe(viewLifecycleOwner, { setLoading(it) })
-        viewModel.getError().observe(viewLifecycleOwner, { displayMessage(it, R.drawable.ic_something_went_wrong) })
-        viewModel.getCharacters().observe(viewLifecycleOwner, { setListItems(it) })
+        viewModel.loading().observe(viewLifecycleOwner) { setLoading(it) }
+        viewModel.getError().observe(viewLifecycleOwner) { displayMessage(it, R.drawable.ic_something_went_wrong) }
+        viewModel.getCharacters().observe(viewLifecycleOwner) { setListItems(it) }
     }
 
     private fun displayMessage(messageId: Int, iconId: Int) {
@@ -47,14 +47,11 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun onCharacterClicked(item: Character) {
-        val bundle = Bundle()
-        bundle.putParcelable("item", item)
-        bundle.putString("title", item.name)
-        findNavController().navigate(R.id.action_listFragment_to_detailFragment, bundle)
+        findNavController().navigate(Uri.parse(requireContext().getString(R.string.detail_deep_link, item.id, item.name)))
     }
 
-    private fun onFavoriteClicked(item: Character) {
-        adapter.orderList()
+    private fun onFavoriteClicked(character: Character) {
+        viewModel.setCharacterAsFavorite(character)
     }
 
     private fun setLoading(isLoading: Boolean) {
@@ -85,7 +82,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
         if (characters.isEmpty()) {
             displayMessage(R.string.fragment_list_empty_message, R.drawable.ic_empty_message)
         } else {
-            adapter.submitList(characters.sortedByDescending { it.isFavorite })
+            adapter.submitList(characters)
             cleanMessage()
         }
     }

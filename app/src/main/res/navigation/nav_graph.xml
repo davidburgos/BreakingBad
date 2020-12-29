@@ -23,17 +23,21 @@
         android:id="@+id/detailFragment"
         android:name="com.breakingbad.ui.detail.CharacterDetailFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
 
         <argument
             android:name="title"
+            android:defaultValue="Example"
             app:argType="string" />
 
         <argument
-            android:name="item"
-            app:argType="com.breakingbad.data.model.Character"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            android:name="characterId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+
+        <deepLink
+            android:id="@+id/detailFragmentDeepLink"
+            app:uri="com.breakingbad.detailFragment/{characterId}/{title}" />
 
         <action
             android:id="@+id/action_detailFragment_to_listFragment"
@@ -41,6 +45,6 @@
             app:enterAnim="@anim/slide_enter_from_right"
             app:exitAnim="@anim/slide_exit_to_left"
             app:popEnterAnim="@anim/slide_enter_from_left"
-            app:popExitAnim="@anim/slide_exit_to_right"/>
+            app:popExitAnim="@anim/slide_exit_to_right" />
     </fragment>
 </navigation>

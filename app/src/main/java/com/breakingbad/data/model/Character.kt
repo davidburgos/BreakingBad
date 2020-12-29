@@ -2,23 +2,26 @@ package com.breakingbad.data.model
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity
 data class Character(
     @SerializedName("char_id")
-    val id: Int,
-    val name: String,
-    val birthday: String,
-    val occupation: List<String>,
-    val img: String,
-    val status: String,
-    val nickname: String,
-    val appearance: List<Int>,
-    val portrayed: String,
-    val category: String,
-    val better_call_saul_appearance: List<Int>,
+    @PrimaryKey val id: Int = 0,
+    val name: String = "",
+    val birthday: String = "",
+    val occupation: List<String> = listOf(),
+    val img: String = "",
+    val status: String = "",
+    val nickname: String = "",
+    val appearance: List<Int> = listOf(),
+    val portrayed: String = "",
+    val category: String = "",
+    val better_call_saul_appearance: List<Int> = listOf(),
     var isFavorite: Boolean = false
 ): Parcelable {
     companion object {

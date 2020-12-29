@@ -17,6 +17,7 @@
     <string name="detail_occupation_label">Occupation:</string>
     <string name="detail_status_label">Status:</string>
     <string name="detail_portrayed_label">Portrayed:</string>
+    <string name="detail_deep_link">http://com.breakingbad.detailFragment/%1$d/%2$s</string>
 
 
 </resources>

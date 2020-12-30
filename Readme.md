@@ -29,3 +29,8 @@ You can the Characters info, and mark them as favorites.
 
 ### Architecture
 * MVVM
+
+### Preview
+![Dashboard](captures/Dashboard.png)
+![Character Detail](captures/CharacterDetail.png)
+

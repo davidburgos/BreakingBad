@@ -33,4 +33,6 @@ You can the Characters info, and mark them as favorites.
 ### Preview
 ![Dashboard](captures/Dashboard.png)
 ![Character Detail](captures/CharacterDetail.png)
+![alt text](https://github.com/davidburgos/BreakingBad/blob/preview/image.jpg?raw=true)
+
 

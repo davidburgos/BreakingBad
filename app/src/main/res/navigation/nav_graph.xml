@@ -32,8 +32,7 @@
 
         <argument
             android:name="characterId"
-            android:defaultValue="-1"
-            app:argType="integer" />
+            app:argType="long" />
 
         <deepLink
             android:id="@+id/detailFragmentDeepLink"

@@ -15,7 +15,7 @@ interface CharacterDAO {
     suspend fun insertAll(worldsStats: List<Character>)
 
     @Query("SELECT * FROM Character WHERE id = :characterId")
-    fun loadCharacter(characterId: Int): LiveData<Character?>
+    fun loadCharacter(characterId: Long): LiveData<Character?>
 
     @Query("SELECT * FROM Character ORDER BY isFavorite DESC")
     fun getAllCharacters(): PagingSource<Int, Character>

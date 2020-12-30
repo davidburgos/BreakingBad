@@ -88,6 +88,9 @@ class CharacterListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun onFavoriteClicked(character: Character) {
+        if (character.isFavorite) {
+            binding.recyclerListView.scrollToPosition(0)
+        }
         viewModel.setCharacterAsFavorite(character)
     }
 

@@ -59,7 +59,7 @@ class CharacterRepository @Inject constructor(
      *
      * @return Observable character object. can be null.
      * */
-    suspend fun getCharacterById(characterId: Int): LiveData<Character?> =
+    suspend fun getCharacterById(characterId: Long): LiveData<Character?> =
         withContext(Dispatchers.IO) {
             breakingBadDataBase.getCharacterDAO().loadCharacter(characterId)
         }

@@ -65,11 +65,11 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt"
 
     // Square
-    implementation 'com.squareup.okhttp3:okhttp:4.0.0'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$okhttp3"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2"
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     // Kotlin coroutines
@@ -83,6 +83,7 @@ dependencies {
 
     //Testing
     testImplementation 'junit:junit:4.13.1'
+    testImplementation("com.squareup.okhttp3:mockwebserver:$okhttp3")
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.room:room-testing:$room_version"

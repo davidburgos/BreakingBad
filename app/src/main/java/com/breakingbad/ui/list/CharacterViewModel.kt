@@ -37,7 +37,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun getCharacterById(characterId: Int): LiveData<Character> {
+    fun getCharacterById(characterId: Long): LiveData<Character> {
         val character = MediatorLiveData<Character>()
         viewModelScope.launch(Dispatchers.Main) {
             loading.value = true
